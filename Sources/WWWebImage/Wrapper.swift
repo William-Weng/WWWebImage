@@ -27,9 +27,11 @@ public extension WWWebImage {
 public extension WWWebImage.Wrapper {
     
     /// 下載圖片到 ImageView
-    /// - Parameter urlString: 圖片網址
+    /// - Parameters:
+    ///   - urlString: 圖片網址
+    ///   - `default`: 預設圖（占位圖）
     /// - Throws: 下載失敗時的錯誤
-    ///
+    /// 
     /// 工作流程：
     /// 1. 獲取或創建 DownloadManeger（透過 DownloadTaskManager）
     /// 2. 取消之前的下載（如果存在）
@@ -38,15 +40,15 @@ public extension WWWebImage.Wrapper {
     /// 5. 開始下載圖片
     /// 6. 下載完成時驗證是否應該顯示（shouldShowImage）
     /// 7. 顯示圖片（只在 main thread）
-    ///
+    /// 
     /// Cell Reuse 追蹤：
     /// - 如果 ImageView 被 reuse，舊任務會被打標為 cancelled
     /// - 舊任務完成時，shouldShowImage 返回 false，不顯示圖片
-    func download(urlString: String) async throws {
+    func download(urlString: String, `default`: UIImage? = nil) async throws {
         
-        guard let manager = prepareDownloadManager(urlString: urlString) else { return }
+        guard let manager = prepareDownloadManager(urlString: urlString) else { await MainActor.run { self.imageView?.image = `default` }; return }
         
-        await MainActor.run { self.imageView?.image = nil }
+        await MainActor.run { self.imageView?.image = `default` }
         try await cacheImage(with: urlString, manager: manager)
     }
     
@@ -107,7 +109,7 @@ private extension WWWebImage.Wrapper {
             await MainActor.run { self.imageView?.image = image }
             return
         }
-                
+        
         let data = try await WWWebImage.Downloader.start(urlString: urlString) { manager.task = $0 }
         
         manager.currentURL = urlString

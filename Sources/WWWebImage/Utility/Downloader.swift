@@ -28,7 +28,7 @@ extension WWWebImage {
                     
                     if let error = error { continuation.resume(throwing: error); return }
                     
-                    guard let location = location else { continuation.resume(throwing: CustomError.urlInvalid); return }
+                    guard let location = location else { continuation.resume(throwing: CustomError.noLocation); return }
                     
                     do {
                         let data = try Data(contentsOf: location)
