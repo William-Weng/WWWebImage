@@ -1,0 +1,24 @@
+{
+  "originHash" : "b813b3a1688838ed8449b90666f7d909ca61b626b7aef99a49750593fb579e41",
+  "pins" : [
+    {
+      "identity" : "wwcachemanager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWCacheManager",
+      "state" : {
+        "revision" : "f1cb47f9ecf8bd4c323432a1145f4b5628bb7bab",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "wwwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWWebImage",
+      "state" : {
+        "revision" : "b137cd54cd23b779b9bd6d2e87175e23ea02f4c7",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}

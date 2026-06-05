@@ -7,35 +7,35 @@
 ![TAG](https://img.shields.io/github/v/tag/William-Weng/WWWebImage)
 [![Swift Package Manager-SUCCESS](https://img.shields.io/badge/Swift_Package_Manager-SUCCESS-blue.svg?style=flat)](https://developer.apple.com/swift/)
 [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
-  
-Async/Await 版的網路圖片下載工具，類似 SDWebImage / Kingfisher 的簡化實作。
+
+An async/await-based web image downloading utility, designed as a lightweight alternative to SDWebImage / Kingfisher.
 
 https://github.com/user-attachments/assets/6cfa2a08-5b13-41f7-a24a-19be09ae4bd6
 
 ---
 
-## 📋 簡介
+## Overview
 
-**WWWebImage** 是一個使用 Swift 6 `async/await` 的網路圖片下載工具，類似於 SDWebImage 或 Kingfisher 的簡化版本。它使用 `WWCacheManager` + `WWNetworking` 實作，支援 **記憶體快取** 和 **Cell Reuse 追蹤**，能有效避免 UITableView/UICollectionView 的圖片錯亂問題。
+**WWWebImage** is a web image downloading utility built with Swift 6 `async/await`. It is a simplified alternative to SDWebImage and Kingfisher, powered by `WWCacheManager` and `WWNetworking`. It supports **memory caching** and **cell reuse tracking**, which helps prevent image mismatch issues in `UITableView` and `UICollectionView`.
 
-### 主要特性
+### Features
 
-| 特性 | 說明 |
+| Feature | Description |
 |------|------|
-| 🚀 **Swift 6 Concurrency** | 原生 `async/await` + `MainActor` |
-| 💾 **記憶體快取** | 使用 `WWCacheManager` 儲存圖片 |
-| 🔄 **Cell Reuse 防錯亂** | 自動追蹤與取消舊任務 |
-| 🎯 **Wrapper 包裝器** | 一行程式碼設定圖片 |
-| 📦 **SPM 支援** | Swift Package Manager 直接安裝 |
-| 🛡️ **錯誤處理** | 完整的 `throw` 錯誤機制 |
+| 🚀 **Swift 6 Concurrency** | Native `async/await` and `MainActor` support |
+| 💾 **Memory Cache** | Stores images using `WWCacheManager` |
+| 🔄 **Cell Reuse Protection** | Automatically tracks and cancels outdated tasks |
+| 🎯 **Wrapper Pattern** | Simple one-line image loading API |
+| 📦 **SPM Support** | Ready to use with Swift Package Manager |
+| 🛡️ **Error Handling** | Full `throw`-based error handling |
 
 ---
 
-## 📦 安裝
+## Installation
 
 ### Swift Package Manager
 
-在 `Package.swift` 中添加：
+Add the following to your `Package.swift`:
 
 ```swift
 dependencies: [
@@ -43,23 +43,24 @@ dependencies: [
 ]
 ```
 
-或在 Xcode 中：
+Or in Xcode:
+
 1. `File` → `Add Packages`
-2. 輸入 `https://github.com/William-Weng/WWWebImage.git`
-3. 選擇版本並添加
+2. Enter `https://github.com/William-Weng/WWWebImage.git`
+3. Select the version and add the package
 
 ---
 
-## 📊 API 參考
+## API Reference
 
-| 方法 | 說明 |
+| Method | Description |
 |------|------|
-| `download(urlString:)` | 下載圖片到 `ImageView` |
-| `cancel()` | 取消當前下載 (通常在 `TableViewCell.prepareForReuse()` 中調用) |
+| `download(urlString:)` | Downloads an image into an `ImageView` |
+| `cancel()` | Cancels the current download, usually called in `prepareForReuse()` |
 
 ---
 
-## 🚀 使用指南
+## Usage
 
 ### ImageTableViewController
 
@@ -80,7 +81,7 @@ final class ImageTableViewController: UITableViewController {
         "https://api.esquirehk.com/var/site/storage/images/_aliases/img_804_w/4/5/6/2/6152654-1-chi-HK/Untitled-2.jpg"
     ]
     
-    private var tripledUrls: [String] { (0..<3).flatMap { _ in self.imageUrls } }
+    private var tripledUrls: [String] { (0..<3).flatMap { _ in imageUrls } }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +89,7 @@ final class ImageTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tripledUrls.count
+        tripledUrls.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -97,16 +98,14 @@ final class ImageTableViewController: UITableViewController {
         let imageUrl = tripledUrls[indexPath.row]
         
         cell.configure(with: imageUrl)
-        
         return cell
     }
 }
-
 ```
 
 ### ImageCell
 
-```
+```swift
 import UIKit
 
 final class ImageCell: UITableViewCell {
@@ -123,44 +122,45 @@ final class ImageCell: UITableViewCell {
     }
     
     func configure(with imageUrl: String) {
-        Task { try await myImageView.ww.download(urlString: imageUrl) }
+        Task {
+            try await myImageView.ww.download(urlString: imageUrl)
+        }
     }
 }
-
 ```
 
 ---
 
-## 🔧 核心架構
+## Core Architecture
 
-### Wrapper 包裝器模式
+### Wrapper Pattern
 
 ```swift
-// Wrapper 是.ImageView 的擴展包裝器
+// Wrapper is a convenience wrapper for UIImageView
 let wrapper = WWWebImage.Wrapper(imageView)
 
-// 主要方法
-await wrapper.download(urlString: "https://...")  // 下載圖片
-wrapper.cancel()                                  // 取消下載
+// Main methods
+await wrapper.download(urlString: "https://...")  // Download image
+wrapper.cancel()                                  // Cancel download
 ```
 
-### Cell Reuse 防錯亂機制
+### Cell Reuse Protection
 
-| 步驟 | 說明 |
+| Step | Description |
 |------|------|
-| 1️⃣ | Cell 被 reuse → `prepareForReuse()` 調用 `cancel()` |
-| 2️⃣ | `cancel()` → 舊任務的 `isCancelled = true` |
-| 3️⃣ | 舊任務完成 → `shouldShowImage` 返回 `false` |
-| 4️⃣ | 舊任務不顯示圖片，避免錯亂 |
-| 5️⃣ | 新任務開始，下載新圖片 |
+| 1️⃣ | The cell is reused, and `prepareForReuse()` calls `cancel()` |
+| 2️⃣ | `cancel()` marks the old task as `isCancelled = true` |
+| 3️⃣ | When the old task finishes, `shouldShowImage` returns `false` |
+| 4️⃣ | The old image is not shown, preventing wrong images from appearing |
+| 5️⃣ | A new task starts and downloads the new image |
 
 ```swift
-// DownloadManager.shouldShowImage 的邏輯
+// DownloadManager.shouldShowImage logic
 var shouldShowImage: Bool {
-    // 任務被取消 → 不顯示
+    // Task cancelled, do not display
     guard !isCancelled else { return false }
     
-    // URL 不匹配 → Cell 被 reuse 了 → 不顯示
+    // URL mismatch, likely reused cell, do not display
     guard currentURL == expectedURL else { return false }
     
     return true
@@ -169,27 +169,29 @@ var shouldShowImage: Bool {
 
 ---
 
-## 📝 依賴專案
+## Dependencies
 
-此專案依賴以下你的其他 Swift 套件：
+This project depends on the following Swift package:
 
-- [WWCacheManager](https://github.com/William-Weng/WWCacheManager) - 記憶體快取管理套件
+- [WWCacheManager](https://github.com/William-Weng/WWCacheManager) - Memory cache manager
 
 ---
 
-## 🧪 錯誤處理
+## Error Handling
 
 ```swift
 enum CustomError: Error {
-    case invalidImageData  // 圖片數據無效
-    case downloadFailed    // 下載失敗
-    case cacheError        // 快取錯誤
+    case invalidImageData
+    case downloadFailed
+    case cacheError
 }
 ```
 
-## 🙏 Acknowledgments
+---
 
-感謝以下專案的靈感與參考：
+## Acknowledgments
 
-- [SDWebImage](https://github.com/SDWebImage/SDWebImage) - iOS 圖片下載與快取經典庫
-- [Kingfisher](https://github.com/onevcat/Kingfisher) - 純 Swift 圖片下載與快取庫
+Thanks to the following projects for inspiration and reference:
+
+- [SDWebImage](https://github.com/SDWebImage/SDWebImage) - A classic iOS image downloading and caching library
+- [Kingfisher](https://github.com/onevcat/Kingfisher) - A pure Swift image downloading and caching library
