@@ -45,11 +45,8 @@ public extension WWWebImage.Wrapper {
     /// - 如果 ImageView 被 reuse，舊任務會被打標為 cancelled
     /// - 舊任務完成時，shouldShowImage 返回 false，不顯示圖片
     func download(urlString: String, `default`: UIImage? = nil) async throws {
-        
-        guard let manager = prepareDownloadManager(urlString: urlString) else { await MainActor.run { self.imageView?.image = `default` }; return }
-        
-        await MainActor.run { self.imageView?.image = `default` }
-        try await cacheImage(with: urlString, manager: manager)
+        guard let maneger = prepareDownloadManager(urlString: urlString) else { await MainActor.run { self.imageView?.image = `default` }; return }
+        try await cacheImage(with: urlString, maneger: maneger, defaultImage: `default`)
     }
     
     /// 取消當前下載
@@ -95,26 +92,33 @@ private extension WWWebImage.Wrapper {
     /// - Parameters:
     ///   - urlString: 圖片網址
     ///   - manager: DownloadManeger（保存 task）
+    ///   - defaultImage: 預設圖片（下載失敗或 Cache 不存在時顯示）
     /// - Throws: 下載失敗時的錯誤
     ///
     /// 工作流程：
     /// 1. 檢查 Cache（如果存在則直接顯示）
-    /// 2. 下載圖片（如果 Cache 不存在）
-    /// 3. 設置 currentURL
-    /// 4. 檢查是否應該顯示（cell reuse 驗證）
-    /// 5. Cache 圖片並顯示
-    func cacheImage(with urlString: String, manager: WWWebImage.DownloadManeger) async throws {
+    /// 2. 顯示預設圖（如果 Cache 不存在）
+    /// 3. 下載圖片（如果 Cache 不存在）
+    /// 4. 設置 currentURL
+    /// 5. 檢查是否應該顯示（cell reuse 驗證）
+    /// 6. Cache 圖片並顯示
+    /// 7. 如果下載失敗，保持預設圖
+    func cacheImage(with urlString: String, maneger: WWWebImage.DownloadManeger, defaultImage: UIImage?) async throws {
         
         if let image = WWWebImage.cacheManager.value(forKey: urlString) {
             await MainActor.run { self.imageView?.image = image }
             return
         }
         
-        let data = try await WWWebImage.Downloader.start(urlString: urlString) { manager.task = $0 }
+        if let defaultImage = defaultImage {
+            await MainActor.run { self.imageView?.image = defaultImage }
+        }
         
-        manager.currentURL = urlString
+        let data = try await WWWebImage.Downloader.start(urlString: urlString) { maneger.task = $0 }
         
-        guard manager.shouldShowImage else { return }
+        maneger.currentURL = urlString
+        
+        guard maneger.shouldShowImage else { return }
         guard let image = UIImage(data: data) else { throw WWWebImage.CustomError.invalidImageData }
         
         await MainActor.run {

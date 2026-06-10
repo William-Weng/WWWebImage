@@ -1,6 +1,6 @@
 [English](./README.en.md) | [正體中文](./README.md)
 
-# [WWWebImage](https://swiftpackageindex.com/William-Weng)
+# [WWWebImage - 簡易的非同步網路圖片下載工具](https://swiftpackageindex.com/William-Weng)
 
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![iOS-16.0](https://img.shields.io/badge/iOS-16.0-pink.svg?style=flat)](https://developer.apple.com/swift/)
@@ -41,7 +41,7 @@ https://github.com/user-attachments/assets/6cfa2a08-5b13-41f7-a24a-19be09ae4bd6
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWWebImage.git", .upToNextMajor(from: "1.0.0"))
+    .package(url: "https://github.com/William-Weng/WWWebImage.git", .upToNextMajor(from: "1.0.2"))
 ]
 ```
 
@@ -63,7 +63,7 @@ dependencies: [
 
 | 方法 | 說明 |
 |------|------|
-| `download(urlString:)` | 下載圖片到 `ImageView` |
+| `download(urlString:default:)` | 下載圖片到 `ImageView` |
 | `cancel()` | 取消當前下載 (通常在 `TableViewCell.prepareForReuse()` 中調用) |
 
 ---
@@ -132,7 +132,7 @@ final class ImageCell: UITableViewCell {
     }
     
     func configure(with imageUrl: String) {
-        Task { try await myImageView.ww.download(urlString: imageUrl) }
+        Task { try await myImageView.ww.download(urlString: imageUrl, default: .placeholder) }
     }
 }
 

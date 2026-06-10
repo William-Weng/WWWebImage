@@ -41,7 +41,7 @@ Add the following to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWWebImage.git", .upToNextMajor(from: "1.0.0"))
+    .package(url: "https://github.com/William-Weng/WWWebImage.git", .upToNextMajor(from: "1.0.2"))
 ]
 ```
 
@@ -65,7 +65,7 @@ This project depends on the following Swift package:
 
 | Method | Description |
 |------|------|
-| `download(urlString:)` | Downloads an image into an `ImageView` |
+| `download(urlString:default:)` | Downloads an image into an `ImageView` |
 | `cancel()` | Cancels the current download, usually called in `prepareForReuse()` |
 
 ---
@@ -123,7 +123,7 @@ final class ImageCell: UITableViewCell {
     @IBOutlet weak var myImageView: UIImageView!
     
     static let identifier = "ImageCell"
-        
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -132,9 +132,7 @@ final class ImageCell: UITableViewCell {
     }
     
     func configure(with imageUrl: String) {
-        Task {
-            try await myImageView.ww.download(urlString: imageUrl)
-        }
+        Task { try await myImageView.ww.download(urlString: imageUrl, default: .placeholder) }
     }
 }
 ```

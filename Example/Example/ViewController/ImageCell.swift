@@ -22,6 +22,6 @@ final class ImageCell: UITableViewCell {
     }
     
     func configure(with imageUrl: String) {
-        Task { try await myImageView.ww.download(urlString: imageUrl) }
+        Task { try await myImageView.ww.download(urlString: imageUrl, default: .placeholder) }
     }
 }
