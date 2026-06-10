@@ -10,7 +10,7 @@
 
 An async/await-based web image downloading utility, designed as a lightweight alternative to SDWebImage / Kingfisher.
 
-https://github.com/user-attachments/assets/6cfa2a08-5b13-41f7-a24a-19be09ae4bd6
+https://github.com/user-attachments/assets/6b45da12-a1f9-4a7c-85d9-0dc50cad5b87
 
 ---
 
@@ -41,7 +41,7 @@ Add the following to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWWebImage.git", .upToNextMajor(from: "1.0.2"))
+    .package(url: "https://github.com/William-Weng/WWWebImage.git", .upToNextMajor(from: "1.0.3"))
 ]
 ```
 

@@ -10,7 +10,7 @@
   
 Async/Await 版的網路圖片下載工具，類似 SDWebImage / Kingfisher 的簡化實作。
 
-https://github.com/user-attachments/assets/6cfa2a08-5b13-41f7-a24a-19be09ae4bd6
+https://github.com/user-attachments/assets/6b45da12-a1f9-4a7c-85d9-0dc50cad5b87
 
 ---
 
@@ -41,7 +41,7 @@ https://github.com/user-attachments/assets/6cfa2a08-5b13-41f7-a24a-19be09ae4bd6
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWWebImage.git", .upToNextMajor(from: "1.0.2"))
+    .package(url: "https://github.com/William-Weng/WWWebImage.git", .upToNextMajor(from: "1.0.3"))
 ]
 ```
 

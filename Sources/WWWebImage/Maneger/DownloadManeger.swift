@@ -18,7 +18,7 @@ extension WWWebImage {
     /// 4. 驗證是否應該顯示圖片（shouldShowImage）
     ///
     /// 由 DownloadTaskManager 透過 ObjC Associated Object 綁定到每個 ImageView
-    final class DownloadManeger {
+    final class DownloadManager {
         
         var task: URLSessionDownloadTask?       // 當前的 URLSessionDownloadTask => 用於在取消時調用 task?.cancel()
         var currentURL: String?                 // 當前正在下載的 URL => 在下載完成時設置為最終下載的 URL
@@ -28,7 +28,7 @@ extension WWWebImage {
 }
 
 // MARK: - 一般屬性擴展
-extension WWWebImage.DownloadManeger {
+extension WWWebImage.DownloadManager {
     
     /// 驗證是否應該顯示圖片
     /// - Returns: 如果 currentURL 等於 expectedURL 且未被取消，返回 true
@@ -42,7 +42,7 @@ extension WWWebImage.DownloadManeger {
 }
 
 // MARK: - 一般方法擴展
-extension WWWebImage.DownloadManeger {
+extension WWWebImage.DownloadManager {
         
     /// 取消下載
     ///

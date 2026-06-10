@@ -12,7 +12,8 @@
 		81086B452FD2C4E400E6920A /* WWWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 81086B442FD2C4E400E6920A /* WWWebImage */; };
 		81086B4B2FD2D0D700E6920A /* WWWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 81086B4A2FD2D0D700E6920A /* WWWebImage */; };
 		817B7C4D2FD942A500BBDABC /* WWWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 817B7C4C2FD942A500BBDABC /* WWWebImage */; };
-		817B7C502FD946C600BBDABC /* WWWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 817B7C4F2FD946C600BBDABC /* WWWebImage */; };
+		817B7C532FD9476000BBDABC /* WWWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 817B7C522FD9476000BBDABC /* WWWebImage */; };
+		817B7C562FD949DA00BBDABC /* WWWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 817B7C552FD949DA00BBDABC /* WWWebImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,10 +47,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				81086B222FD2BF2400E6920A /* WWWebImage in Frameworks */,
-				817B7C502FD946C600BBDABC /* WWWebImage in Frameworks */,
+				817B7C532FD9476000BBDABC /* WWWebImage in Frameworks */,
 				81086B4B2FD2D0D700E6920A /* WWWebImage in Frameworks */,
 				817B7C4D2FD942A500BBDABC /* WWWebImage in Frameworks */,
 				81086B452FD2C4E400E6920A /* WWWebImage in Frameworks */,
+				817B7C562FD949DA00BBDABC /* WWWebImage in Frameworks */,
 				81086B3F2FD2C42100E6920A /* WWWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,7 +100,8 @@
 				81086B442FD2C4E400E6920A /* WWWebImage */,
 				81086B4A2FD2D0D700E6920A /* WWWebImage */,
 				817B7C4C2FD942A500BBDABC /* WWWebImage */,
-				817B7C4F2FD946C600BBDABC /* WWWebImage */,
+				817B7C522FD9476000BBDABC /* WWWebImage */,
+				817B7C552FD949DA00BBDABC /* WWWebImage */,
 			);
 			productName = Example;
 			productReference = 817EE1FE2EB1FA050036B57C /* Example.app */;
@@ -129,7 +132,7 @@
 			mainGroup = 817EE1F52EB1FA050036B57C;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				817B7C4E2FD946C600BBDABC /* XCRemoteSwiftPackageReference "WWWebImage" */,
+				817B7C542FD949DA00BBDABC /* XCRemoteSwiftPackageReference "WWWebImage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 817EE1FF2EB1FA050036B57C /* Products */;
@@ -373,12 +376,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		817B7C4E2FD946C600BBDABC /* XCRemoteSwiftPackageReference "WWWebImage" */ = {
+		817B7C542FD949DA00BBDABC /* XCRemoteSwiftPackageReference "WWWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWWebImage";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.0.1;
+				minimumVersion = 1.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -404,9 +407,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = WWWebImage;
 		};
-		817B7C4F2FD946C600BBDABC /* WWWebImage */ = {
+		817B7C522FD9476000BBDABC /* WWWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 817B7C4E2FD946C600BBDABC /* XCRemoteSwiftPackageReference "WWWebImage" */;
+			productName = WWWebImage;
+		};
+		817B7C552FD949DA00BBDABC /* WWWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 817B7C542FD949DA00BBDABC /* XCRemoteSwiftPackageReference "WWWebImage" */;
 			productName = WWWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */

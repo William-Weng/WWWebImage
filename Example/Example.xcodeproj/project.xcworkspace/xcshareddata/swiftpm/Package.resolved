@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWWebImage",
       "state" : {
-        "revision" : "9e0f50e146d4cb7f6a3078c2e488d6c865fd10cf",
-        "version" : "1.0.1"
+        "revision" : "f2d86b5cd1c9e223c428449cd9da2820988d5366",
+        "version" : "1.0.2"
       }
     }
   ],
