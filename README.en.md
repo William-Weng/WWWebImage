@@ -16,7 +16,7 @@ https://github.com/user-attachments/assets/6b45da12-a1f9-4a7c-85d9-0dc50cad5b87
 
 ## Overview
 
-**WWWebImage** is a web image downloading utility built with Swift 6 `async/await`. It is a simplified alternative to SDWebImage and Kingfisher, powered by `WWCacheManager` and `WWNetworking`. It supports **memory caching** and **cell reuse tracking**, which helps prevent image mismatch issues in `UITableView` and `UICollectionView`.
+**WWWebImage** is a web image downloading utility built with Swift 6 `async/await`. It is a simplified alternative to SDWebImage and Kingfisher, powered by `WWCacheManager`. It supports **memory caching** and **cell reuse tracking**, which helps prevent image mismatch issues in `UITableView` and `UICollectionView`.
 
 ---
 

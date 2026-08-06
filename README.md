@@ -16,7 +16,7 @@ https://github.com/user-attachments/assets/6b45da12-a1f9-4a7c-85d9-0dc50cad5b87
 
 ## 📋 簡介
 
-**WWWebImage** 是一個使用 Swift 6 `async/await` 的網路圖片下載工具，類似於 SDWebImage 或 Kingfisher 的簡化版本。它使用 `WWCacheManager` + `WWNetworking` 實作，支援 **記憶體快取** 和 **Cell Reuse 追蹤**，能有效避免 UITableView/UICollectionView 的圖片錯亂問題。
+**WWWebImage** 是一個使用 Swift 6 `async/await` 的網路圖片下載工具，類似於 SDWebImage 或 Kingfisher 的簡化版本。它使用 `WWCacheManager` 實作，支援 **記憶體快取** 和 **Cell Reuse 追蹤**，能有效避免 UITableView/UICollectionView 的圖片錯亂問題。
 
 ---
 
